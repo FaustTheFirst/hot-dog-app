@@ -1,0 +1,19 @@
+{
+  "name": "hot-dog-app",
+  "version": "1.0.0",
+  "description": "App with basic CRUD",
+  "main": "./server/app.js",
+  "scripts": {
+    "start": "node ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FaustTheFirst/hot-dog-app.git"
+  },
+  "author": "Bohdan Panashenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FaustTheFirst/hot-dog-app/issues"
+  },
+  "homepage": "https://github.com/FaustTheFirst/hot-dog-app#readme"
+}
