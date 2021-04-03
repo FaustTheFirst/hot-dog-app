@@ -12,5 +12,6 @@
   },
   "ignorePatterns": "**/client/*",
   "rules": {
+    "comma-dangle": ["error", "never"]
   }
 }
