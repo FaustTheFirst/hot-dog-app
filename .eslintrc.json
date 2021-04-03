@@ -12,6 +12,9 @@
   },
   "ignorePatterns": "**/client/*",
   "rules": {
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "import/extensions": ["error", "always", {
+      "ignorePackages": true
+    }]
   }
 }
