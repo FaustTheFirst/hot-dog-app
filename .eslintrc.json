@@ -10,6 +10,7 @@
       "ecmaVersion": 12,
       "sourceType": "module"
   },
+  "ignorePatterns": "**/client/*",
   "rules": {
   }
 }
