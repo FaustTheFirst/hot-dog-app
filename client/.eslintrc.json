@@ -19,6 +19,7 @@
     ],
     "root": true,
     "rules": {
-      "comma-dangle": ["error", "never"]
+      "comma-dangle": ["error", "never"],
+      "arrow-parens": ["error", "as-needed"]
     }
 }

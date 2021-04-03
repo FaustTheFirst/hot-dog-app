@@ -15,6 +15,7 @@
     "comma-dangle": ["error", "never"],
     "import/extensions": ["error", "always", {
       "ignorePackages": true
-    }]
+    }],
+    "arrow-parens": ["error", "as-needed"]
   }
 }

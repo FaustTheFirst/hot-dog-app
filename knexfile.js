@@ -1,4 +1,4 @@
-import env from './env.js';
+import env from './server/env.js';
 
 export default {
   client: 'pg',
@@ -12,5 +12,8 @@ export default {
   pool: {
     min: 2,
     max: 10
+  },
+  migrations: {
+    directory: './server/database/migrations'
   }
 };
