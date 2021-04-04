@@ -21,6 +21,6 @@
     "rules": {
       "comma-dangle": ["error", "never"],
       "arrow-parens": ["error", "as-needed"],
-      "object-curly-newline": ["error", { "multiline": true }]
+      "object-curly-newline": ["error", { "ObjectPattern": { "multiline": true} }]
     }
 }
