@@ -1,14 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { render } from 'react-dom';
+import Main from './Pages/Main';
 import reportWebVitals from './reportWebVitals';
+import 'semantic-ui-css/semantic.min.css';
 
-ReactDOM.render(
+const root = document.getElementById('root');
+
+render(
   <React.StrictMode>
-    <App />
+    <Main />
   </React.StrictMode>,
-  document.getElementById('root')
+  root
 );
 
 // If you want to start measuring performance in your app, pass a function

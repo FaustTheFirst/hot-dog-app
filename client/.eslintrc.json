@@ -20,6 +20,7 @@
     "root": true,
     "rules": {
       "comma-dangle": ["error", "never"],
-      "arrow-parens": ["error", "as-needed"]
+      "arrow-parens": ["error", "as-needed"],
+      "object-curly-newline": ["error", { "ObjectPattern": { "multiline": true} }]
     }
 }
