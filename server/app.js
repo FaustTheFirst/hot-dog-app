@@ -7,7 +7,7 @@ import cors from 'cors';
 import Knex from 'knex';
 import env from './env.js';
 import knexConfig from '../knexfile.js';
-// eslint-disable-next-line
+import routes from './api/routes/index.js';
 import TestModel from './database/models/index.js';
 
 const app = express();
@@ -17,6 +17,8 @@ app.use(cors());
 const knex = Knex(knexConfig);
 
 Model.knex(knex);
+
+routes(app);
 
 app.get('/test', (req, res) => {
   TestModel.query()
