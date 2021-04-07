@@ -1,12 +1,10 @@
-/* eslint-disable */
-export const up = knex => {
-  return knex.schema.createTable('testModel', table => {
-    table.uuid('id');
-    table.string('name');
-    table.timestamp('created_at').defaultTo(knex.fn.now());
-  });
-};
+export const up = knex => knex.schema.createTable('hotdogs', table => {
+  table.uuid('id').notNullable().primary().defaultTo(knex.raw('gen_random_uuid()'));
+  table.string('name').notNullable().unique();
+  table.string('description');
+  table.float('price').notNullable().defaultTo(1);
+  table.string('imgURL');
+  table.timestamps(true, true);
+});
 
-export const down = knex => {
-  return knex.schema.dropTable('testModel');
-};
+export const down = knex => knex.schema.dropTable('hotdogs');
