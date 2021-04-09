@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, getModal, getStatus } from '../entity';
@@ -87,31 +86,6 @@ const ModalWindow = () => {
       </Modal.Actions>
     </Modal>
   );
-};
-
-ModalWindow.propTypes = {
-  obj: PropTypes.exact({
-    data: PropTypes.exact({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number,
-      description: PropTypes.string,
-      imgURL: PropTypes.string
-    }),
-    type: PropTypes.string
-  })
-};
-
-ModalWindow.defaultProps = {
-  obj: {
-    data: {
-      name: '',
-      price: '',
-      description: '',
-      imgURL: ''
-    },
-    type: ''
-  }
 };
 
 export default ModalWindow;
