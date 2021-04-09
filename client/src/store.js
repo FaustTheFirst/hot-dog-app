@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import testReducer from './entity';
+import hotDogReducer from './entity';
 
 const initialState = {};
 
 const reducer = {
-  main: testReducer
+  hotDogs: hotDogReducer
 };
 
 export default configureStore({
