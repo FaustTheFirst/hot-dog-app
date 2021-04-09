@@ -3,13 +3,14 @@ import { Button, Form, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, getStatus } from '../entity';
+import { closeModal, getModal, getStatus } from '../entity';
 import { addHotDog, editHotDog, removeHotDog } from '../thunks';
 
-const ModalWindow = ({ obj }) => {
+const ModalWindow = () => {
   const dispatch = useDispatch();
   const statusFromStore = useSelector(getStatus());
-  const { data, type } = obj;
+  const modal = useSelector(getModal());
+  const { data, type } = modal;
   const [input, setInput] = useState(data);
   const modalTypes = {
     Create: [
@@ -41,7 +42,7 @@ const ModalWindow = ({ obj }) => {
   return (
     <Modal
       onClose={() => closeFn()}
-      open
+      open={!!modal}
     >
       <Modal.Header>
         {type}

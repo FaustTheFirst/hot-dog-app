@@ -31,7 +31,7 @@ const App = () => {
           id={id}
         />
       ))}
-      {modal ? <ModalWindow obj={modal} /> : null}
+      {modal ? <ModalWindow /> : null}
     </>
   );
 };
