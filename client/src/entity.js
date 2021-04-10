@@ -17,6 +17,9 @@ const hotDogSlice = createSlice({
     },
     closeModal: state => {
       state.modal = null;
+    },
+    dissmissMessage: state => {
+      state.status = 'idle';
     }
   },
   extraReducers: {
@@ -28,48 +31,48 @@ const hotDogSlice = createSlice({
       hotDogAdapter.setAll(state, payload);
     },
     [getAllHotDogs.rejected]: state => {
-      state.status = 'idle';
+      state.status = 'error';
     },
     [getHotDog.pending]: state => {
       state.status = 'loadingOne';
     },
     [getHotDog.fulfilled]: state => {
-      state.status = 'idle';
+      state.status = 'success';
     },
     [getHotDog.rejected]: state => {
-      state.status = 'idle';
+      state.status = 'error';
     },
     [addHotDog.pending]: state => {
       state.status = 'creating';
     },
     [addHotDog.fulfilled]: (state, { payload }) => {
-      state.status = 'idle';
+      state.status = 'success';
       hotDogAdapter.addOne(state, payload);
     },
     [addHotDog.rejected]: state => {
-      state.status = 'idle';
+      state.status = 'error';
     },
     [editHotDog.pending]: state => {
       state.status = 'updating';
     },
     [editHotDog.fulfilled]: (state, { payload }) => {
-      state.status = 'idle';
+      state.status = 'success';
       const { id, ...changes } = payload;
       hotDogAdapter.updateOne(state, { id, changes });
     },
     [editHotDog.rejected]: state => {
-      state.status = 'idle';
+      state.status = 'error';
     },
     [removeHotDog.pending]: state => {
       state.status = 'deleting';
     },
     [removeHotDog.fulfilled]: (state, { meta }) => {
-      state.status = 'idle';
+      state.status = 'success';
       const { arg } = meta;
       hotDogAdapter.removeOne(state, arg);
     },
     [removeHotDog.rejected]: state => {
-      state.status = 'idle';
+      state.status = 'error';
     }
   }
 });
@@ -88,6 +91,11 @@ export const getModal = () => createDraftSafeSelector(getRootState, state => sta
 export const getStatus = () => createDraftSafeSelector(getRootState,
   state => state.hotDogs.status);
 
-export const { openCreateModal, openUpdateModal, closeModal } = hotDogSlice.actions;
+export const {
+  openCreateModal,
+  openUpdateModal,
+  closeModal,
+  dissmissMessage
+} = hotDogSlice.actions;
 
 export default hotDogSlice.reducer;
