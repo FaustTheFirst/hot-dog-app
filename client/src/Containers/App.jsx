@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon, Menu } from 'semantic-ui-react';
-import { selectIds, getModal, openCreateModal } from '../entity';
+import { selectIds, openCreateModal } from '../entity';
 import { getAllHotDogs } from '../thunks';
 import ModalWindow from '../Components/ModalWindow';
 import CardComponent from '../Components/CardComponent';
 
 const App = () => {
   const dispatch = useDispatch();
-  const modal = useSelector(getModal());
   const hotDogsIdsArr = useSelector(selectIds);
 
   useEffect(() => dispatch(getAllHotDogs()), []);
@@ -20,7 +19,7 @@ const App = () => {
           Icon
         </Menu.Item>
         <Menu.Item position="right">
-          <Button icon circular onClick={() => dispatch(openCreateModal({ data: {}, type: 'Create' }))}>
+          <Button icon circular onClick={() => dispatch(openCreateModal({}))}>
             <Icon name="plus" />
           </Button>
         </Menu.Item>
@@ -31,7 +30,7 @@ const App = () => {
           id={id}
         />
       ))}
-      {modal ? <ModalWindow /> : null}
+      <ModalWindow />
     </>
   );
 };

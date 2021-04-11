@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
-import { Button, Form, Modal } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal } from 'semantic-ui-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, getModal, getStatus } from '../entity';
 import { addHotDog, editHotDog, removeHotDog } from '../thunks';
+import FormComponent from './FormComponent';
 
 const ModalWindow = () => {
   const dispatch = useDispatch();
   const statusFromStore = useSelector(getStatus());
   const modal = useSelector(getModal());
-  const { data, type } = modal;
-  const [input, setInput] = useState(data);
+  const defaultModal = {
+    data: {
+      name: '',
+      price: '',
+      imgURL: '',
+      description: ''
+    },
+    type: 'Create'
+  };
+
+  const [input, setInput] = useState(defaultModal);
+  const [isValid, setIsValid] = useState(true);
+  useEffect(() => {
+    const { data = defaultModal.data, type = defaultModal.type } = modal ?? defaultModal;
+    setInput({ data, type });
+    setIsValid(true);
+  }, [modal]);
   const modalTypes = {
     Create: [
       {
         fn: body => dispatch(addHotDog(body)),
         name: 'create',
         color: 'green',
-        status: 'creating'
+        status: 'creating',
+        canDisable: true
       }
     ],
     Update: [
@@ -25,18 +42,22 @@ const ModalWindow = () => {
         fn: ({ id, ...body }) => dispatch(editHotDog({ id, body })),
         name: 'edit',
         color: 'blue',
-        status: 'updating'
+        status: 'updating',
+        canDisable: true
       },
       {
         fn: ({ id }) => dispatch(removeHotDog(id)),
         name: 'delete',
         color: 'red',
-        status: 'deleting'
+        status: 'deleting',
+        canDisable: false
       }
     ]
   };
 
   const closeFn = () => dispatch(closeModal());
+
+  console.log(isValid, 'val');
 
   return (
     <Modal
@@ -44,39 +65,22 @@ const ModalWindow = () => {
       open={!!modal}
     >
       <Modal.Header>
-        {type}
-        hotdog
+        {`${input.type} hot dog`}
       </Modal.Header>
       <Modal.Description>
-        <Form>
-          <Form.Input
-            label="Name"
-            value={input.name}
-            onChange={e => setInput({ ...input, name: e.target.value })}
-          />
-          <Form.Input
-            label="Price"
-            value={input.price}
-            onChange={e => setInput({ ...input, price: e.target.value })}
-          />
-          <Form.Input
-            label="Description"
-            value={input.description}
-            onChange={e => setInput({ ...input, description: e.target.value })}
-          />
-          <Form.Input
-            label="Image"
-            value={input.imgURL}
-            onChange={e => setInput({ ...input, imgURL: e.target.value })}
-          />
-        </Form>
+        <FormComponent
+          data={input.data}
+          setInput={data => setInput({ ...input, data })}
+          setIsValid={setIsValid}
+        />
       </Modal.Description>
       <Modal.Actions>
-        {modalTypes[type].map(({ name, color, fn, status }) => (
+        {modalTypes[input.type].map(({ name, color, fn, status, canDisable }) => (
           <Button
             key={name}
             content={name}
             color={color}
+            disabled={canDisable && !isValid}
             loading={statusFromStore === status}
             onClick={() => {
               fn(input).then(res => (isFulfilled(res) ? closeFn() : null));
