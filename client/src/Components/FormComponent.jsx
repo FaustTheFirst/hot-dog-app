@@ -10,6 +10,8 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
     description: null
   });
 
+  const { name, price, imgURL, description } = data;
+
   const nameValidation = value => {
     if (typeof value !== 'string') return 'Must be a string';
     if (value.length === 0) return 'Field is required';
@@ -34,7 +36,7 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
 
   const descriptionValidation = value => {
     if (typeof value !== 'string') return 'Must be a string';
-    if (value.length > 255) return 'Must be less than 16 symbols';
+    if (value.length > 64) return 'Must be less than 64 symbols';
     return null;
   };
 
@@ -43,7 +45,7 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
       <Form.Input
         label="Name"
         required
-        value={data.name}
+        value={name}
         error={errorState.name && {
           content: errorState.name,
           pointing: 'left'
@@ -60,7 +62,7 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
       <Form.Input
         label="Price"
         required
-        value={data.price}
+        value={price}
         error={errorState.price && {
           content: errorState.price,
           pointing: 'left'
@@ -76,7 +78,7 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
       />
       <Form.Input
         label="Image"
-        value={data.imgURL}
+        value={imgURL || ''}
         error={errorState.imgURL && {
           content: errorState.imgURL,
           pointing: 'left'
@@ -92,12 +94,12 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
       />
       <Form.TextArea
         label="Description"
-        value={data.description}
+        value={description || ''}
         error={errorState.description && {
           content: errorState.description,
           pointing: 'above'
         }}
-        placeholder="Max 255 symbols"
+        placeholder="Max 64 symbols"
         onChange={e => {
           setInput({ ...data, description: e.target.value });
           const check = descriptionValidation(e.target.value);
@@ -112,12 +114,17 @@ const FormComponent = ({ data, setInput, setIsValid }) => {
 FormComponent.propTypes = {
   data: PropTypes.exact({
     name: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired]),
     description: PropTypes.string.isRequired,
-    imgURL: PropTypes.string.isRequired
+    imgURL: PropTypes.string.isRequired,
+    id: PropTypes.string
   }).isRequired,
   setInput: PropTypes.func.isRequired,
   setIsValid: PropTypes.func.isRequired
+};
+
+FormComponent.defaulProps = {
+  id: undefined
 };
 
 export default FormComponent;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Icon, Menu } from 'semantic-ui-react';
+import { Button, Grid, Icon, Menu } from 'semantic-ui-react';
 import { selectIds, openCreateModal } from '../entity';
 import { getAllHotDogs } from '../thunks';
 import ModalWindow from '../Components/ModalWindow';
@@ -19,17 +19,22 @@ const App = () => {
           Icon
         </Menu.Item>
         <Menu.Item position="right">
-          <Button icon circular onClick={() => dispatch(openCreateModal({}))}>
+          <Button icon color="blue" circular onClick={() => dispatch(openCreateModal({}))}>
             <Icon name="plus" />
           </Button>
         </Menu.Item>
       </Menu>
-      {hotDogsIdsArr.map(id => (
-        <CardComponent
-          key={id}
-          id={id}
-        />
-      ))}
+      <Grid padded="horizontally" divided="vertically">
+        <Grid.Row columns={4} stretched>
+          {hotDogsIdsArr.map(id => (
+            <Grid.Column key={id}>
+              <CardComponent
+                id={id}
+              />
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+      </Grid>
       <ModalWindow />
     </>
   );

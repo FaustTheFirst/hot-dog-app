@@ -56,9 +56,6 @@ const ModalWindow = () => {
   };
 
   const closeFn = () => dispatch(closeModal());
-
-  console.log(isValid, 'val');
-
   return (
     <Modal
       onClose={() => closeFn()}
@@ -83,7 +80,7 @@ const ModalWindow = () => {
             disabled={canDisable && !isValid}
             loading={statusFromStore === status}
             onClick={() => {
-              fn(input).then(res => (isFulfilled(res) ? closeFn() : null));
+              fn(input.data).then(res => (isFulfilled(res) ? closeFn() : null));
             }}
           />
         ))}

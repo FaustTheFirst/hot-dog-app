@@ -12,8 +12,11 @@ const CardComponent = ({ id }) => {
   const dateCreated = moment(created_at).fromNow();
   const dateUpdated = created_at !== updated_at ? moment(updated_at).fromNow() : null;
   return (
-    <Card>
-      <Image src={imgURL} alt={name} />
+    <Card style={{ wordBreak: 'break-word' }}>
+      <Image
+        src={imgURL || 'https://react.semantic-ui.com/images/wireframe/image.png'}
+        alt={name}
+      />
       <Card.Content>
         <Card.Header>
           {name}
@@ -24,19 +27,19 @@ const CardComponent = ({ id }) => {
           {dateUpdated ? ` (last update - ${dateUpdated})` : null}
         </Card.Meta>
         <Card.Description>
-          {price}
+          {`${price}$`}
         </Card.Description>
         <Card.Content extra>
-          {description}
-        </Card.Content>
-        <Card.Content extra>
-          <Button
-            color="blue"
-            content="edit"
-            onClick={() => dispatch(openUpdateModal({ data: { id, name, price, description, imgURL }, type: 'Update' }))}
-          />
+          {description || 'No description provided'}
         </Card.Content>
       </Card.Content>
+      <Button
+        color="blue"
+        content="edit"
+        attached="bottom"
+        onClick={() => dispatch(openUpdateModal({ data: { id, name, price, description, imgURL }, type: 'Update' }))}
+        style={{ bottom: '0' }}
+      />
     </Card>
   );
 };
