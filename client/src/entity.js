@@ -9,10 +9,7 @@ const hotDogSlice = createSlice({
   name: 'hotDog',
   initialState: hotDogAdapter.getInitialState({ status: 'idle', message: null, modal: null }),
   reducers: {
-    openCreateModal: (state, { payload }) => {
-      state.modal = payload;
-    },
-    openUpdateModal: (state, { payload }) => {
+    openModal: (state, { payload }) => {
       state.modal = payload;
     },
     closeModal: state => {
@@ -105,8 +102,7 @@ export const getMessage = () => createDraftSafeSelector(getRootState,
   state => state.hotDogs.message);
 
 export const {
-  openCreateModal,
-  openUpdateModal,
+  openModal,
   closeModal,
   dissmissMessage
 } = hotDogSlice.actions;

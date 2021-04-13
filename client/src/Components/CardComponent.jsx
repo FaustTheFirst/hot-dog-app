@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Card, Image } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { getEntityById, openUpdateModal } from '../entity';
+import { getEntityById, openModal } from '../entity';
 /* eslint-disable camelcase */
 const CardComponent = ({ id }) => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const CardComponent = ({ id }) => {
         color="blue"
         content="edit"
         attached="bottom"
-        onClick={() => dispatch(openUpdateModal({ data: { id, name, price, description, imgURL }, type: 'Update' }))}
+        onClick={() => dispatch(openModal({ data: { id, name, price, description, imgURL }, type: 'Update' }))}
         style={{ bottom: '0' }}
       />
     </Card>

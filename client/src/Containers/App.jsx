@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Icon, Menu } from 'semantic-ui-react';
-import { selectIds, openCreateModal } from '../entity';
+import { selectIds, openModal } from '../entity';
 import { getAllHotDogs } from '../thunks';
 import ModalWindow from '../Components/ModalWindow';
 import CardComponent from '../Components/CardComponent';
@@ -19,7 +19,7 @@ const App = () => {
           Icon
         </Menu.Item>
         <Menu.Item position="right">
-          <Button icon color="blue" circular onClick={() => dispatch(openCreateModal({}))}>
+          <Button icon color="blue" circular onClick={() => dispatch(openModal({}))}>
             <Icon name="plus" />
           </Button>
         </Menu.Item>
