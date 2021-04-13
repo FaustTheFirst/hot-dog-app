@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid, Icon, Menu } from 'semantic-ui-react';
+import { Button, Card, Icon, Image, Menu } from 'semantic-ui-react';
 import { selectIds, openModal } from '../entity';
 import { getAllHotDogs } from '../thunks';
 import ModalWindow from '../Components/ModalWindow';
@@ -14,27 +14,37 @@ const App = () => {
 
   return (
     <>
-      <Menu>
-        <Menu.Item position="left">
-          Icon
+      <Menu borderless widths={3}>
+        <Menu.Item position="left" style={{ justifyContent: 'flex-start' }}>
+          <Image
+            avatar
+            src="https://st2.depositphotos.com/3259223/5925/v/600/depositphotos_59252767-stock-illustration-hot-dog.jpg"
+            alt="logo"
+            style={{ marginLeft: '2%' }}
+          />
+          Hot dog app
         </Menu.Item>
-        <Menu.Item position="right">
-          <Button icon color="blue" circular onClick={() => dispatch(openModal({}))}>
+        <Menu.Item header as="h3" content="Hotdogs for everyone!" />
+        <Menu.Item position="right" style={{ justifyContent: 'flex-end' }}>
+          <Button
+            icon
+            color="blue"
+            circular
+            onClick={() => dispatch(openModal({}))}
+            style={{ marginRight: '2%' }}
+          >
             <Icon name="plus" />
           </Button>
         </Menu.Item>
       </Menu>
-      <Grid padded="horizontally" divided="vertically">
-        <Grid.Row columns={4} stretched>
-          {hotDogsIdsArr.map(id => (
-            <Grid.Column key={id}>
-              <CardComponent
-                id={id}
-              />
-            </Grid.Column>
-          ))}
-        </Grid.Row>
-      </Grid>
+      <Card.Group stackable itemsPerRow={4}>
+        {hotDogsIdsArr.map(id => (
+          <CardComponent
+            id={id}
+            key={id}
+          />
+        ))}
+      </Card.Group>
       <ModalWindow />
     </>
   );
