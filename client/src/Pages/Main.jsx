@@ -1,13 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Notification from '../Components/Notification';
-import App from '../Containers/App';
-import store from '../store';
+import { ConnectedRouter } from 'connected-react-router';
+import store, { history } from '../store';
+import Routing from '../Containers/Routing';
 
 const Main = () => (
   <Provider store={store}>
-    <App />
-    <Notification />
+    <ConnectedRouter history={history}>
+      <Routing />
+    </ConnectedRouter>
   </Provider>
 );
 

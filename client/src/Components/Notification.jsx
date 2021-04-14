@@ -15,7 +15,8 @@ const Notification = () => {
     <TransitionablePortal
       transition={{ animation: 'fade left', duration: 500 }}
       open={isOpen}
-      onClose={() => dispatch(dissmissMessage())}
+      onClose={() => setIsOpen(false)}
+      onHide={() => dispatch(dissmissMessage())}
     >
       <Message
         success={status === 'success'}
