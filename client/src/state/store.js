@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import hotDogReducer from './entity';
+import hotDogReducer from './slice';
 
 const initialState = {};
 

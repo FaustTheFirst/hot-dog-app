@@ -1,13 +1,10 @@
-import { createDraftSafeSelector, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { addHotDog, editHotDog, getAllHotDogs, getHotDog, removeHotDog } from './thunks';
+import hotDogAdapter from './adapter';
 
-const hotDogAdapter = createEntityAdapter({
-  sortComparer: (a, b) => b.updated_at.localeCompare(a.updated_at)
-});
-/* eslint-disable no-param-reassign */
 const hotDogSlice = createSlice({
   name: 'hotDog',
-  initialState: hotDogAdapter.getInitialState({ status: 'idle', message: null, modal: null }),
+  initialState: hotDogAdapter.getInitialState({ status: 'loadingAll', message: null, modal: null }),
   reducers: {
     openModal: (state, { payload }) => {
       state.modal = payload;
@@ -28,9 +25,9 @@ const hotDogSlice = createSlice({
       state.status = 'idle';
       hotDogAdapter.setAll(state, payload);
     },
-    [getAllHotDogs.rejected]: (state, { payload }) => {
+    [getAllHotDogs.rejected]: state => {
       state.status = 'error';
-      state.message = `Cannot load data: ${payload.type}`;
+      state.message = 'Cannot load data';
     },
     [getHotDog.pending]: state => {
       state.status = 'loadingOne';
@@ -83,23 +80,6 @@ const hotDogSlice = createSlice({
     }
   }
 });
-
-const selector = hotDogAdapter.getSelectors(state => state.hotDogs);
-
-export const { selectIds, selectEntities, selectAll, selectById } = selector;
-
-const getRootState = state => state;
-
-export const getEntityById = id => createDraftSafeSelector(getRootState,
-  state => selectById(state, id));
-
-export const getModal = () => createDraftSafeSelector(getRootState, state => state.hotDogs.modal);
-
-export const getStatus = () => createDraftSafeSelector(getRootState,
-  state => state.hotDogs.status);
-
-export const getMessage = () => createDraftSafeSelector(getRootState,
-  state => state.hotDogs.message);
 
 export const {
   openModal,

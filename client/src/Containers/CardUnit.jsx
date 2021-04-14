@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { Button, Card, Image } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { getEntityById, openModal } from '../entity';
+import { openModal } from '../state/slice';
+import { getEntityById } from '../state/selectors';
+import placeholder from '../assets/placeholder.png';
+
 /* eslint-disable camelcase */
-const CardComponent = ({ id }) => {
+const CardUnit = ({ id }) => {
   const dispatch = useDispatch();
   const hotDog = useSelector(getEntityById(id));
   const { name, description, price, imgURL, created_at, updated_at } = hotDog;
@@ -14,7 +17,7 @@ const CardComponent = ({ id }) => {
   return (
     <Card style={{ wordBreak: 'break-word' }}>
       <Image
-        src={imgURL || 'https://react.semantic-ui.com/images/wireframe/image.png'}
+        src={imgURL || placeholder}
         alt={name}
       />
       <Card.Content>
@@ -44,8 +47,8 @@ const CardComponent = ({ id }) => {
   );
 };
 
-CardComponent.propTypes = {
+CardUnit.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-export default CardComponent;
+export default CardUnit;

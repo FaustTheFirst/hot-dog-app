@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NotFound from '../Pages/NotFound';
-import App from './App';
+import App from '../Containers/App';
 
 const Routing = () => (
   <>

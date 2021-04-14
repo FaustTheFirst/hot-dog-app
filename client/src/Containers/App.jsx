@@ -3,18 +3,19 @@ import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Image, Loader, Menu } from 'semantic-ui-react';
-import { selectIds, openModal, getStatus } from '../entity';
-import { getAllHotDogs } from '../thunks';
-import ModalWindow from '../Components/ModalWindow';
-import Notification from '../Components/Notification';
-import logo from '../assets/logo.png';
+import { openModal } from '../state/slice';
+import { getStatus, selectIds } from '../state/selectors';
+import { getAllHotDogs } from '../state/thunks';
+import ModalWindow from './ModalWindow';
+import Notification from './Notification';
 import LoadedContent from '../Components/LoadedContent';
+import logo from '../assets/logo.png';
 
 const App = () => {
   const dispatch = useDispatch();
   const hotDogsIdsArr = useSelector(selectIds);
   const status = useSelector(getStatus());
-  const [showList, setShowList] = useState(true);
+  const [showList, setShowList] = useState(false);
 
   useEffect(() => dispatch(getAllHotDogs())
     .then(res => setShowList(isFulfilled(res))), []);

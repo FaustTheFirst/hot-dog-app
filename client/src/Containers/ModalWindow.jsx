@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, getModal, getStatus } from '../entity';
-import { addHotDog, editHotDog, removeHotDog } from '../thunks';
-import FormComponent from './FormComponent';
+import { closeModal } from '../state/slice';
+import { addHotDog, editHotDog, removeHotDog } from '../state/thunks';
+import FormComponent from '../Components/FormComponent';
+import { getModal, getStatus } from '../state/selectors';
 
 const ModalWindow = () => {
   const dispatch = useDispatch();

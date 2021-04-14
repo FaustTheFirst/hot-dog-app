@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Port specified according to server port
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
 axios.defaults.headers['Content-Type'] = 'application/json';
 

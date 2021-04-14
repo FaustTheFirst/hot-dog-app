@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Message, TransitionablePortal } from 'semantic-ui-react';
-import { dissmissMessage, getMessage, getStatus } from '../entity';
+import { getMessage, getStatus } from '../state/selectors';
+import { dissmissMessage } from '../state/slice';
 
 const Notification = () => {
   const dispatch = useDispatch();

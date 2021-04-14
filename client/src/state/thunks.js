@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createOne, deleteOne, getAll, getOne, updateOne } from './requestHelper';
+import { createOne, deleteOne, getAll, getOne, updateOne } from '../utils/requestHelper';
 
 export const getAllHotDogs = createAsyncThunk(
   'hotdog/getAll',

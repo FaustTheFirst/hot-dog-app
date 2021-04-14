@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'semantic-ui-react';
-import CardComponent from './CardComponent';
+import CardUnit from '../Containers/CardUnit';
 import ErrorHeader from './ErrorHeader';
 
 const CardsList = ({ hotDogsIdsArr }) => (
@@ -11,7 +11,7 @@ const CardsList = ({ hotDogsIdsArr }) => (
       : (
         <Card.Group stackable itemsPerRow={4}>
           {hotDogsIdsArr.map(id => (
-            <CardComponent
+            <CardUnit
               id={id}
               key={id}
             />
