@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { isFulfilled } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Card, Icon, Image, Menu } from 'semantic-ui-react';
-import { selectIds, openModal } from '../entity';
+import { Button, Icon, Image, Loader, Menu } from 'semantic-ui-react';
+import { selectIds, openModal, getStatus } from '../entity';
 import { getAllHotDogs } from '../thunks';
 import ModalWindow from '../Components/ModalWindow';
-import CardComponent from '../Components/CardComponent';
 import Notification from '../Components/Notification';
+import logo from '../assets/logo.png';
+import LoadedContent from '../Components/LoadedContent';
 
 const App = () => {
   const dispatch = useDispatch();
   const hotDogsIdsArr = useSelector(selectIds);
+  const status = useSelector(getStatus());
+  const [showList, setShowList] = useState(true);
 
-  useEffect(() => dispatch(getAllHotDogs()), []);
-
+  useEffect(() => dispatch(getAllHotDogs())
+    .then(res => setShowList(isFulfilled(res))), []);
   return (
     <>
       <Menu borderless widths={3}>
@@ -21,7 +25,7 @@ const App = () => {
           <Link to="/" onClick={() => window.location.reload()} style={{ marginLeft: '2%' }}>
             <Image
               avatar
-              src="https://st2.depositphotos.com/3259223/5925/v/600/depositphotos_59252767-stock-illustration-hot-dog.jpg"
+              src={logo}
               alt="logo"
             />
             Hot dog app
@@ -40,14 +44,9 @@ const App = () => {
           </Button>
         </Menu.Item>
       </Menu>
-      <Card.Group stackable itemsPerRow={4}>
-        {hotDogsIdsArr.map(id => (
-          <CardComponent
-            id={id}
-            key={id}
-          />
-        ))}
-      </Card.Group>
+      {status === 'loadingAll'
+        ? <Loader active content="Loading" />
+        : <LoadedContent showList={showList} hotDogsIdsArr={hotDogsIdsArr} />}
       <ModalWindow />
       <Notification />
     </>
