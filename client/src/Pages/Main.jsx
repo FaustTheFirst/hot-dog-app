@@ -1,11 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import App from '../App';
-import store from '../store';
+import { ConnectedRouter } from 'connected-react-router';
+import store, { history } from '../state/store';
+import Routing from '../Components/Routing';
 
 const Main = () => (
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <Routing />
+    </ConnectedRouter>
   </Provider>
 );
 
