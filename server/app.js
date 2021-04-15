@@ -2,7 +2,7 @@ import fs from 'fs';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
-import { Model } from 'objection';
+import objection from 'objection';
 import cors from 'cors';
 import Knex from 'knex';
 import env from './env.js';
@@ -10,6 +10,7 @@ import knexConfig from '../knexfile.js';
 import routes from './api/routes/index.js';
 import logErrorsMiddleware from './api/middlewares/logErrorsMiddleware.js';
 import validationErrorMiddleware from './api/middlewares/validationErrorMiddleware.js';
+import constraintViolationErrorMiddleware from './api/middlewares/constraintViolationErrorMiddleware.js';
 import notFoundErrorMiddleware from './api/middlewares/notFoundErrorMiddleware.js';
 import dataErrorMiddleware from './api/middlewares/dataErrorMiddleware.js';
 import dbErrorMiddleware from './api/middlewares/dbErrorMiddleware.js';
@@ -19,7 +20,15 @@ const app = express();
 
 app.use(cors());
 
-const knex = Knex(knexConfig);
+const { Model, knexIdentifierMapping } = objection;
+
+const knex = Knex({
+  ...knexConfig,
+  ...knexIdentifierMapping({
+    created_at: 'createdAt',
+    updated_at: 'updatedAt'
+  })
+});
 
 Model.knex(knex);
 
@@ -43,6 +52,7 @@ app.get('*', (req, res) => {
 app.use(
   logErrorsMiddleware,
   validationErrorMiddleware,
+  constraintViolationErrorMiddleware,
   notFoundErrorMiddleware,
   dataErrorMiddleware,
   dbErrorMiddleware,

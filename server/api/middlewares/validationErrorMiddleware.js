@@ -6,8 +6,7 @@ export default (err, req, res, next) => {
   if (err instanceof ValidationError) {
     res.status(400).send({
       message: err.message,
-      type: 'ValidationError',
-      data: err.data
+      type: 'ValidationError'
     });
   } else {
     next(err);
