@@ -11,9 +11,9 @@ import placeholder from '../assets/placeholder.png';
 const CardUnit = ({ id }) => {
   const dispatch = useDispatch();
   const hotDog = useSelector(getEntityById(id));
-  const { name, description, price, imgURL, created_at, updated_at } = hotDog;
-  const dateCreated = moment(created_at).fromNow();
-  const dateUpdated = created_at !== updated_at ? moment(updated_at).fromNow() : null;
+  const { name, description, price, imgURL, createdAt, updatedAt } = hotDog;
+  const dateCreated = moment(createdAt).fromNow();
+  const dateUpdated = createdAt !== updatedAt ? moment(updatedAt).fromNow() : null;
   return (
     <Card style={{ wordBreak: 'break-word' }}>
       <Image
