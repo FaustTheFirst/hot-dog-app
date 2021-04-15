@@ -17,7 +17,7 @@ class HotDogModel extends Model {
         name: { type: 'string', minLength: 3, maxLength: 16 },
         description: {
           anyOf: [
-            { type: 'string', maxLength: 64 },
+            { type: 'string', maxLength: 128 },
             { type: 'null' }
           ]
         },
