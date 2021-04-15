@@ -15,13 +15,16 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "react-hooks"
     ],
     "root": true,
     "rules": {
       "comma-dangle": ["error", "never"],
       "arrow-parens": ["error", "as-needed"],
       "object-curly-newline": ["error", { "ObjectPattern": { "multiline": true} }],
-      "no-param-reassign": ["error", { "props": false }]
+      "no-param-reassign": ["error", { "props": false }],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     }
 }
