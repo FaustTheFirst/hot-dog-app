@@ -1,4 +1,7 @@
+import objection from 'objection';
 import hotDogRepository from '../../database/repositories/hotDogRepository.js';
+
+const { ValidationError } = objection;
 
 export const getAllHotDogs = async () => {
   const allHotDogs = await hotDogRepository.getAll();
@@ -6,10 +9,9 @@ export const getAllHotDogs = async () => {
   return allHotDogs;
 };
 
-export const getHotDog = async id => {
-  const hotDog = await hotDogRepository.getById(id);
-
-  return hotDog;
+export const getHotDog = async name => {
+  const hotDog = await hotDogRepository.getByName(name);
+  if (hotDog) throw new ValidationError({ type: 'ValidationError', message: `${name} already exists` });
 };
 
 export const addHotDog = async data => {

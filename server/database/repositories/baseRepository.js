@@ -11,9 +11,9 @@ export default class BaseRepository {
     });
   }
 
-  getById(id) {
+  getByName(name) {
     return this.model.transaction(async trx => {
-      const one = await this.model.query(trx).findById(id).throwIfNotFound();
+      const one = await this.model.query(trx).findOne({ name });
 
       return one;
     });

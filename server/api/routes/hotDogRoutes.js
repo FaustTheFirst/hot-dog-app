@@ -13,8 +13,8 @@ router
   .get('/', (req, res, next) => getAllHotDogs()
     .then(payload => res.status(200).send(payload))
     .catch(next))
-  .get('/:id', (req, res, next) => getHotDog(req.params.id)
-    .then(payload => res.status(200).send(payload))
+  .get('/:name', (req, res, next) => getHotDog(req.params.name)
+    .then(() => res.status(200).send())
     .catch(next))
   .post('/', (req, res, next) => addHotDog(req.body)
     .then(payload => res.status(200).send(payload))
@@ -23,7 +23,7 @@ router
     .then(payload => res.status(200).send(payload))
     .catch(next))
   .delete('/:id', (req, res, next) => removeHotDog(req.params.id)
-    .then(() => res.status(200).send({ success: true }))
+    .then(() => res.status(200).send())
     .catch(next));
 
 export default router;
