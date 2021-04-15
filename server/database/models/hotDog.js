@@ -12,12 +12,22 @@ class HotDogModel extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name'],
+      required: ['name', 'price'],
       properties: {
-        name: { type: 'string' },
-        description: { type: 'string' },
-        price: { type: 'float' },
-        imgURL: { type: 'string' }
+        name: { type: 'string', minLength: 3, maxLength: 16 },
+        description: {
+          anyOf: [
+            { type: 'string', maxLength: 64 },
+            { type: 'null' }
+          ]
+        },
+        price: { type: 'number', exclusiveMinimum: 0, maximum: 100 },
+        imgURL: {
+          anyOf: [
+            { type: 'string', format: 'uri', maxLength: 128 },
+            { type: 'null' }
+          ]
+        }
       },
       additionalProperties: false
     };
