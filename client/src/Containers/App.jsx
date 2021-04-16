@@ -18,7 +18,7 @@ const App = () => {
   const [showList, setShowList] = useState(false);
 
   useEffect(() => dispatch(getAllHotDogs())
-    .then(res => setShowList(isFulfilled(res))), []);
+    .then(res => setShowList(isFulfilled(res))), [dispatch]);
   return (
     <>
       <Menu borderless widths={3}>

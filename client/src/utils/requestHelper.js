@@ -6,7 +6,7 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 
 export const getAll = () => axios.get('/hotdog/');
 
-export const getOne = id => axios.get(`/hotdog/${id}`);
+export const getOne = name => axios.get(`/hotdog/${name}`);
 
 export const createOne = body => axios.post('/hotdog/', body);
 
