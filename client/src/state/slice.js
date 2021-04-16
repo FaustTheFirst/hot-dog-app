@@ -33,12 +33,10 @@ const hotDogSlice = createSlice({
       state.status = 'loadingOne';
     },
     [getHotDog.fulfilled]: state => {
-      state.status = 'success';
-      state.message = 'Hot dog found';
+      state.status = 'idle';
     },
-    [getHotDog.rejected]: (state, { payload }) => {
-      state.status = 'error';
-      state.message = `Cannot load hot dog: ${payload.type}`;
+    [getHotDog.rejected]: state => {
+      state.status = 'idle';
     },
     [addHotDog.pending]: state => {
       state.status = 'creating';

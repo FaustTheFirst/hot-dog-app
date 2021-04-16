@@ -9,7 +9,7 @@ export const getAllHotDogs = createAsyncThunk(
 
 export const getHotDog = createAsyncThunk(
   'hotdog/get',
-  (id, { rejectWithValue }) => getOne(id)
+  (name, { rejectWithValue }) => getOne(name)
     .then(res => res.data).catch(err => rejectWithValue(err.response.data))
 );
 

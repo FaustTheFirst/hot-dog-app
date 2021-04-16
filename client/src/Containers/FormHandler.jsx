@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled, isRejected } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import { getModal, getStatus } from '../state/selectors';
 import validationFunctions from '../helpers/validationFunctions';
 import modalTypes from '../helpers/modalTypes';
 import { closeModal } from '../state/slice';
+import { getHotDog } from '../state/thunks';
 
 const FormHandler = () => {
   const dispatch = useDispatch();
   const modal = useSelector(getModal());
   const statusFromStore = useSelector(getStatus());
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
   const memoDefaultModal = useMemo(() => ({
     data: {
       name: '',
@@ -31,14 +32,17 @@ const FormHandler = () => {
     description: null
   });
 
+  const {
+    data = memoDefaultModal.data,
+    type = memoDefaultModal.type
+  } = modal ?? memoDefaultModal;
+
+  const initialName = data.name;
+
   useEffect(() => {
-    const {
-      data = memoDefaultModal.data,
-      type = memoDefaultModal.type
-    } = modal ?? memoDefaultModal;
     setInput({ ...data });
     setModalType(type);
-  }, [modal, memoDefaultModal]);
+  }, [data, type]);
 
   const { name, price, imgURL, description } = input;
 
@@ -48,11 +52,14 @@ const FormHandler = () => {
     return !check;
   };
 
+  const checkIfNameNotUnique = value => dispatch(getHotDog(value))
+    .then(res => (isRejected(res) ? res.payload.message : null));
+
   const beforeSubmit = properties => {
     const checkAll = Object.entries(properties)
       .filter(item => item[0] !== 'id')
       .map(item => validation(item[1], item[0], validationFunctions[item[0]]));
-    return checkAll.some(item => item !== false);
+    return checkAll.every(item => item !== false);
   };
 
   return (
@@ -63,6 +70,7 @@ const FormHandler = () => {
             label="Name"
             required
             value={name}
+            loading={statusFromStore === 'loadingOne'}
             error={errorState.name && {
               content: errorState.name,
               pointing: 'left'
@@ -70,11 +78,18 @@ const FormHandler = () => {
             placeholder="e.g.: Hot Dog"
             onChange={e => {
               setInput({ ...input, name: e.target.value });
-              const check = validation(e.target.value, 'name', validationFunctions.name);
-              setIsValid(check);
+              validation(e.target.value, 'name', validationFunctions.name);
             }}
             onBlur={e => {
               const check = validation(e.target.value, 'name', validationFunctions.name);
+              if (check && e.target.value !== initialName) {
+                checkIfNameNotUnique(e.target.value)
+                  .then(res => {
+                    setErrorState({ ...errorState, name: res });
+                    setIsValid(!res);
+                  });
+                return;
+              }
               setIsValid(check);
             }}
             style={{ width: '50%' }}
@@ -90,8 +105,7 @@ const FormHandler = () => {
             placeholder="0.00"
             onChange={e => {
               setInput({ ...input, price: e.target.value });
-              const check = validation(e.target.value, 'price', validationFunctions.price);
-              setIsValid(check);
+              validation(e.target.value, 'price', validationFunctions.price);
             }}
             onBlur={e => {
               const check = validation(e.target.value, 'price', validationFunctions.price);
@@ -109,8 +123,7 @@ const FormHandler = () => {
             placeholder="e.g: http(s)://example.com/path/to/file.jpg"
             onChange={e => {
               setInput({ ...input, imgURL: e.target.value });
-              const check = validation(e.target.value, 'imgURL', validationFunctions.imgURL);
-              setIsValid(check);
+              validation(e.target.value, 'imgURL', validationFunctions.imgURL);
             }}
             onBlur={e => {
               const check = validation(e.target.value, 'imgURL', validationFunctions.imgURL);
@@ -128,8 +141,7 @@ const FormHandler = () => {
             placeholder="Max 128 symbols"
             onChange={e => {
               setInput({ ...input, description: e.target.value });
-              const check = validation(e.target.value, 'description', validationFunctions.description);
-              setIsValid(check);
+              validation(e.target.value, 'description', validationFunctions.description);
             }}
             onBlur={e => {
               const check = validation(e.target.value, 'description', validationFunctions.description);
