@@ -61,7 +61,6 @@ const FormHandler = () => {
       .map(item => validation(item[1], item[0], validationFunctions[item[0]]));
     return checkAll.every(item => item !== false);
   };
-
   return (
     <>
       <Modal.Description>
@@ -122,7 +121,8 @@ const FormHandler = () => {
             }}
             placeholder="e.g: http(s)://example.com/path/to/file.jpg"
             onChange={e => {
-              setInput({ ...input, imgURL: e.target.value });
+              const convertIfEmpty = e.target.value === '' ? null : e.target.value;
+              setInput({ ...input, imgURL: convertIfEmpty });
               validation(e.target.value, 'imgURL', validationFunctions.imgURL);
             }}
             onBlur={e => {
@@ -140,7 +140,8 @@ const FormHandler = () => {
             }}
             placeholder="Max 128 symbols"
             onChange={e => {
-              setInput({ ...input, description: e.target.value });
+              const convertIfEmpty = e.target.value === '' ? null : e.target.value;
+              setInput({ ...input, description: convertIfEmpty });
               validation(e.target.value, 'description', validationFunctions.description);
             }}
             onBlur={e => {

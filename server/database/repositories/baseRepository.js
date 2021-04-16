@@ -5,7 +5,7 @@ export default class BaseRepository {
 
   getAll() {
     return this.model.transaction(async trx => {
-      const all = await this.model.query(trx).throwIfNotFound();
+      const all = await this.model.query(trx);
 
       return all;
     });

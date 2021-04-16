@@ -7,7 +7,6 @@ import { openModal } from '../state/slice';
 import { getEntityById } from '../state/selectors';
 import placeholder from '../assets/placeholder.png';
 
-/* eslint-disable camelcase */
 const CardUnit = ({ id }) => {
   const dispatch = useDispatch();
   const hotDog = useSelector(getEntityById(id));
