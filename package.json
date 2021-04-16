@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ./server/app.js",
     "dev": "nodemon ./server/app.js",
-    "prestart": "node ./node_modules/knex/lib/bin/cli.js migrate:latest"
+    "prestart": "npx knex migrate:latest --esm"
   },
   "repository": {
     "type": "git",
