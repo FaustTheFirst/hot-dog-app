@@ -30,6 +30,12 @@ const knex = Knex({
   })
 });
 
+knex.migrate.latest({ ...knexConfig })
+  // eslint-disable-next-line no-console
+  .then(() => console.log('db migration complete'))
+  // eslint-disable-next-line no-console
+  .catch(err => console.log('Migration error:', err));
+
 Model.knex(knex);
 
 app.use(express.json());
